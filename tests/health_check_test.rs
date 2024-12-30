@@ -1,8 +1,8 @@
 use axum::http::StatusCode;
 use sqlx::{Pool, Postgres};
-use test_utils::TestContext;
+pub use utils::test_utils::*;
 
-mod test_utils;
+mod utils;
 
 #[sqlx::test]
 fn health_check(pool: Pool<Postgres>) {

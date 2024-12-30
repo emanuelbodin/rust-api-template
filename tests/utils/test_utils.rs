@@ -7,6 +7,7 @@ use axum_rest_api_template::create_app;
 use sqlx::{Pool, Postgres};
 use tower::Service;
 
+#[cfg(test)]
 pub struct TestContext {
     pub app: Router,
 }

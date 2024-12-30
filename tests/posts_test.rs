@@ -2,9 +2,9 @@ use axum::http::StatusCode;
 use axum_rest_api_template::posts::db::Post;
 use axum_rest_api_template::users::db::User;
 use sqlx::{Pool, Postgres};
-use test_utils::TestContext;
+pub use utils::test_utils::*;
 
-mod test_utils;
+mod utils;
 
 #[sqlx::test]
 fn create_post(pool: Pool<Postgres>) {
