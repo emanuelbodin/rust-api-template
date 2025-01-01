@@ -1,7 +1,8 @@
 use serde::{Deserialize, Serialize};
 use sqlx::{Error, Pool, Postgres};
+use utoipa::ToSchema;
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, ToSchema)]
 pub struct Post {
     pub id: i32,
     pub user_id: i32,
@@ -9,7 +10,7 @@ pub struct Post {
     pub body: String,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, ToSchema)]
 pub struct CreatePost {
     title: String,
     body: String,

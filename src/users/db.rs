@@ -1,14 +1,15 @@
 use serde::{Deserialize, Serialize};
 use sqlx::{Error, Pool, Postgres};
+use utoipa::ToSchema;
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, ToSchema)]
 pub struct User {
     pub id: i32,
     pub username: String,
     pub email: String,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, ToSchema)]
 pub struct CreateUser {
     pub username: String,
     pub email: String,

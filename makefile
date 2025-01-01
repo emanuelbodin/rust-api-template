@@ -1,10 +1,10 @@
 up:
-	docker compose up & \
+	docker compose up -d && \
 	cargo run
 
 up-test:
 	docker compose up -d && \
-	cargo test && \
+	cargo nextest run && \
 	docker compose down
 	
 down :

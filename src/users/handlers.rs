@@ -3,6 +3,14 @@ use sqlx::{Pool, Postgres};
 
 use super::db::{insert_user, select_users, CreateUser, User};
 
+#[utoipa::path(
+    get,
+    path = "/api/users",
+    responses(
+        (status = 200, body = [User]),
+        (status = 404 )
+    )
+)]
 pub async fn get_users(
     Extension(pool): Extension<Pool<Postgres>>,
 ) -> Result<Json<Vec<User>>, StatusCode> {
@@ -13,6 +21,15 @@ pub async fn get_users(
     Ok(Json(users))
 }
 
+#[utoipa::path(
+    post,
+    path = "/api/users",
+    request_body = CreateUser,
+    responses(
+        (status = 200, body = CreateUser),
+        (status = 404 )
+    )
+)]
 pub async fn create_user(
     Extension(pool): Extension<Pool<Postgres>>,
     Json(new_user): Json<CreateUser>,

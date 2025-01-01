@@ -3,6 +3,13 @@ use axum::{extract::Path, http::StatusCode, Extension, Json};
 use db::{delete_post, insert_post, select_all_posts, select_post, update_post, CreatePost, Post};
 use sqlx::{Pool, Postgres};
 
+#[utoipa::path(
+    get,
+    path = "/api/posts",
+    responses(
+        (status = 200, body = [Post])
+    )
+)]
 pub async fn get_posts(
     Extension(pool): Extension<Pool<Postgres>>,
 ) -> Result<Json<Vec<Post>>, StatusCode> {
@@ -13,6 +20,17 @@ pub async fn get_posts(
     Ok(Json(posts))
 }
 
+#[utoipa::path(
+    get,
+    path = "/api/posts/{id}",
+    params(
+        ("id" = i32, description = "Post ID")
+    ),
+    responses(
+        (status = 200, body = Post),
+        (status = 404 )
+    )
+)]
 pub async fn get_post(
     Extension(pool): Extension<Pool<Postgres>>,
     Path(id): Path<i32>,
@@ -24,6 +42,15 @@ pub async fn get_post(
     Ok(Json(post))
 }
 
+#[utoipa::path(
+    post,
+    path = "/api/posts",
+    request_body = CreatePost,
+    responses(
+        (status = 200, body = Post),
+        (status = 404 )
+    )
+)]
 pub async fn create_post(
     Extension(pool): Extension<Pool<Postgres>>,
     Json(new_post): Json<CreatePost>,
@@ -35,6 +62,15 @@ pub async fn create_post(
     Ok(Json(post))
 }
 
+#[utoipa::path(
+    put,
+    path = "/api/posts",
+    request_body = Post,
+    responses(
+        (status = 200, body = Post),
+        (status = 404 )
+    )
+)]
 pub async fn put_post(
     Extension(pool): Extension<Pool<Postgres>>,
     Path(id): Path<i32>,
@@ -48,6 +84,17 @@ pub async fn put_post(
     }
 }
 
+#[utoipa::path(
+    delete,
+    path = "/api/posts/{id}",
+    params(
+        ("id" = i32, description = "Post ID to delete")
+    ),
+    responses(
+        (status = 200, body = Post),
+        (status = 404 )
+    )
+)]
 pub async fn remove_post(
     Extension(pool): Extension<Pool<Postgres>>,
     Path(id): Path<i32>,
